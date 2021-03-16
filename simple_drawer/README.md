@@ -36,7 +36,7 @@ class MyApp2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     {
-      // set one simpleDrawer for each direction
+      // set one SimpleDrawer from bottom
       Widget bottomSimpleDrawer = SimpleDrawer(
         child: Container(
           color: Colors.green,
