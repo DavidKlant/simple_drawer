@@ -34,10 +34,15 @@ class MyApp2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     {
-      // set one SimpleDrawer from bottom
+      // set one simpleDrawer sliding in from the bottom
       Widget bottomSimpleDrawer = SimpleDrawer(
         child: Container(
-          color: Colors.green,
+          // round the corners & set color
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            color: Colors.green,
+          ),
           width: MediaQuery.of(context).size.width,
           height: 300,
         ),
