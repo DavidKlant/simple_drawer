@@ -28,6 +28,7 @@ class SimpleDrawer extends StatefulWidget {
   }
 
   /// unique id chosen for a SimpleDrawer (chosen by user)
+  /// (if this is changed, you must perform at least a hot reload)
   /// (must be set)
   final String id;
 
@@ -214,7 +215,6 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
           Widget pushingWidget = AnimatedContainer(
             duration: Duration(milliseconds: durationInMilli),
             curve: animationCurve,
-            color: Colors.red,
             height: (isShown) ? widget.childHeight : 0,
           );
 
@@ -222,6 +222,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
           simpleDrawer = Positioned(
             top: -widget.childHeight,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 pushingWidget,
                 widget.child,
@@ -238,7 +239,6 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
           Widget pushingWidget = AnimatedContainer(
             duration: Duration(milliseconds: durationInMilli),
             curve: animationCurve,
-            color: Colors.red,
             width: (isShown) ? widget.childWidth : 0,
           );
 
@@ -246,9 +246,10 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
           simpleDrawer = Positioned(
             left: -widget.childWidth,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 pushingWidget,
-                widget.child,
+                (isActive) ? widget.child : Container(),
                 contractor(
                     durationInMilli, animationCurve, maxWidth, maxHeight),
               ],
