@@ -1,6 +1,6 @@
 # simple_drawer
 
-simple_drawer offers an easy way to implement your own drawer sliding in from any direction (top, bottom, left & right).
+simple_drawer offers an easy way to implement your own widget as a drawer which slides in from any direction (top, bottom, left & right).
 
 ## Getting Started
 
