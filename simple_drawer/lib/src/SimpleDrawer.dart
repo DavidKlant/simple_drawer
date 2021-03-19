@@ -74,15 +74,15 @@ class SimpleDrawer extends StatefulWidget {
 
   SimpleDrawer(
       {this.direction,
-        this.childWidth,
-        this.childHeight,
-        this.animationDurationInMilliseconds,
-        this.animationCurve,
-        this.child,
-        this.simpleDrawerAreaHeight,
-        this.simpleDrawerAreaWidth,
-        this.fadeColor,
-        this.id}) {
+      this.childWidth,
+      this.childHeight,
+      this.animationDurationInMilliseconds,
+      this.animationCurve,
+      this.child,
+      this.simpleDrawerAreaHeight,
+      this.simpleDrawerAreaWidth,
+      this.fadeColor,
+      this.id}) {
     if (id == null) {
       throw Exception("id can not be null");
     }
@@ -162,14 +162,8 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   @override
   Widget build(BuildContext context) {
     // get device measurements
-    double deviceHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double deviceWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
 
     // set defaults
     int durationInMilli = widget.animationDurationInMilliseconds ?? 300;
@@ -194,8 +188,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   /// build the Column or Row containing the widget.child depending of the
   /// chosen Direction
   Widget simpleDrawer(int durationInMilli, Curve animationCurve,
-      double maxWidth,
-      double maxHeight) {
+      double maxWidth, double maxHeight) {
     Widget simpleDrawer;
 
     switch (widget.direction) {
@@ -285,7 +278,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
         widget.direction == Direction.bottom) {
       touchToRetractWidth = (isShown) ? maxWidth : 0;
       touchToRetractHeight =
-      (isShown) ? maxHeight - widget.childHeight : maxHeight;
+          (isShown) ? maxHeight - widget.childHeight : maxHeight;
     }
 
     // set touchToRetractWidget for Direction.left & .right

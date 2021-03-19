@@ -20,10 +20,7 @@ class MyApp extends StatelessWidget {
                 topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             color: Colors.green,
           ),
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          width: MediaQuery.of(context).size.width,
           height: 300,
         ),
         childHeight: 300,
@@ -35,10 +32,7 @@ class MyApp extends StatelessWidget {
       Widget rightSimpleDrawer = SimpleDrawer(
         child: Container(
           color: Colors.green,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          height: MediaQuery.of(context).size.height,
           width: 200,
         ),
         childWidth: 200,
@@ -50,10 +44,7 @@ class MyApp extends StatelessWidget {
       Widget leftSimpleDrawer = SimpleDrawer(
         child: Container(
           color: Colors.green,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          height: MediaQuery.of(context).size.height,
           width: 150,
         ),
         childWidth: 150,
@@ -65,10 +56,7 @@ class MyApp extends StatelessWidget {
       Widget topSimpleDrawer = SimpleDrawer(
         child: Container(
           color: Colors.green,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
+          width: MediaQuery.of(context).size.width,
           height: 300,
         ),
         childHeight: 300,
@@ -80,10 +68,7 @@ class MyApp extends StatelessWidget {
       Widget leftSimpleDrawerFadeColorAltered = SimpleDrawer(
         child: Container(
           color: Colors.green,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          height: MediaQuery.of(context).size.height,
           width: 150,
         ),
         childWidth: 150,
@@ -96,10 +81,7 @@ class MyApp extends StatelessWidget {
       Widget leftSimpleDrawerAnimationCurveAndDuration = SimpleDrawer(
         child: Container(
           color: Colors.green,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          height: MediaQuery.of(context).size.height,
           width: 150,
         ),
         childWidth: 150,

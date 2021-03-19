@@ -9,9 +9,9 @@ class WidgetWrappedInAnimation extends StatefulWidget {
 
   WidgetWrappedInAnimation(
       {this.child,
-        this.transitionType,
-        this.durationInMilliseconds,
-        this.curve}) {
+      this.transitionType,
+      this.durationInMilliseconds,
+      this.curve}) {
     if (child == null) {
       throw Exception("ScaleUpAnimation needs child to be set");
     }
@@ -33,17 +33,15 @@ class _WidgetWrappedInAnimationState extends State<WidgetWrappedInAnimation>
     //set default
     int durationInMilliseconds = widget.durationInMilliseconds ?? 1000;
     _animationController = AnimationController(
-        duration: Duration(milliseconds: durationInMilliseconds),
-        vsync: this)
-      ..animateTo(1,
-          duration: Duration(milliseconds: durationInMilliseconds));
+        duration: Duration(milliseconds: durationInMilliseconds), vsync: this)
+      ..animateTo(1, duration: Duration(milliseconds: durationInMilliseconds));
   }
 
   @override
   Widget build(BuildContext context) {
     // set defaults
-    TransitionType transitionType = widget.transitionType ??
-        TransitionType.fadeIn;
+    TransitionType transitionType =
+        widget.transitionType ?? TransitionType.fadeIn;
     Curve curve = widget.curve ?? Curves.ease;
 
     if (transitionType == TransitionType.fadeOut) {
