@@ -2,8 +2,8 @@
 
 simple_drawer offers an easy way to implement your own widget as a drawer which slides in from any direction (top, bottom, left & right).
 
-![Bottom Sheet](https://i.imgur.com/iX9H15n.gif =240x)
-![Left Drawer](https://i.imgur.com/VtV6YRA.gif =240x)
+<img src="https://i.imgur.com/iX9H15n.gif" width="240" height="520"/>
+<img src="https://i.imgur.com/VtV6YRA.gif" width="240" height="357"/>
 
 ## Getting Started
 
