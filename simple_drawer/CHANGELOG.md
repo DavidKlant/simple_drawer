@@ -10,3 +10,7 @@
 * format code (using dart format)
 * refactor functionality of simpleDrawerAreaHeight & Width to perform bug-free when user inputs certain faulty data (too large child size)
 * refactor description
+
+## [0.0.3] - 2021-03-20
+
+* add gifs

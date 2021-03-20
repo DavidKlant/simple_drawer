@@ -2,6 +2,9 @@
 
 simple_drawer offers an easy way to implement your own widget as a drawer which slides in from any direction (top, bottom, left & right).
 
+![Bottom Sheet](https://i.imgur.com/iX9H15n.gif)
+![Left Drawer](https://i.imgur.com/VtV6YRA.gif)
+
 ## Getting Started
 
 **To use, add a SimpleDrawer at the end of a Stack & activate it by calling "SimpleDrawer.activate(id);" anywhere.**
