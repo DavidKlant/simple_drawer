@@ -9,22 +9,31 @@ import 'package:simple_drawer/src/WidgetWrappedInAnimation.dart';
 /// SimpleDrawer-Widget which can be pushed in from all four sides
 class SimpleDrawer extends StatefulWidget {
   /// Map which holds a StreamController for each unique SimpleDrawer
-  static Map<String, StreamController<String>> idToStreamController = HashMap();
+  static Map<String, StreamController<String>> _idToStreamController = HashMap();
+  static Map<String, bool> _idToIsActive = HashMap();
 
-  /// activates the SimpleDrawer of the chosen Id
-  static activate(String id) {
-    if (idToStreamController[id] == null) {
-      return;
-    }
-    idToStreamController[id].add("activate");
+  /// return false if the SimpleDrawer with the given id is not showing or
+  /// currently retracting
+  static bool isActive(String id){
+    return (_idToIsActive[id] != null && _idToIsActive[id]);
   }
 
-  /// deactivates the SimpleDrawer of the chosen Id
-  static deactivate(String id) {
-    if (idToStreamController[id] == null) {
+  /// activates the SimpleDrawer of the chosen Id & set isActive to true
+  static activate(String id) {
+    if (_idToStreamController[id] == null) {
       return;
     }
-    idToStreamController[id].add("deactivate");
+    _idToIsActive[id] = true;
+    _idToStreamController[id].add("activate");
+  }
+
+  /// deactivates the SimpleDrawer of the chosen Id & set isActive to false
+  static deactivate(String id) {
+    if (_idToStreamController[id] == null) {
+      return;
+    }
+    _idToIsActive[id] = false;
+    _idToStreamController[id].add("deactivate");
   }
 
   /// unique id chosen for a SimpleDrawer (chosen by user)
@@ -112,10 +121,10 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   @override
   void initState() {
     // init the StreamController
-    SimpleDrawer.idToStreamController[widget.id] = StreamController<String>();
+    SimpleDrawer._idToStreamController[widget.id] = StreamController<String>();
 
     // listen to the StreamController for events "activate" & "deactivate"
-    SimpleDrawer.idToStreamController[widget.id].stream.listen((event) {
+    SimpleDrawer._idToStreamController[widget.id].stream.listen((event) {
       if (event == "activate") {
         activateSimpleDrawer();
       }
@@ -129,7 +138,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   @override
   void dispose() {
     // close SteamController
-    SimpleDrawer.idToStreamController[widget.id].close();
+    SimpleDrawer._idToStreamController[widget.id].close();
 
     super.dispose();
   }
@@ -291,7 +300,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     Widget touchToRetractWidget = GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        deactivateSimpleDrawer();
+        SimpleDrawer.deactivate(widget.id);
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: durationInMilli),

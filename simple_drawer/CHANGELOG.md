@@ -22,3 +22,8 @@
 ## [0.0.5] - 2021-03-20
 
 * fix images (0.0.4 broke them)
+
+## [0.0.6] - 2021-04-10
+
+* add function isActive, so the user can get the current status of any SimpleDrawer
+* hide _idToStreamController (formerly idToStreamController) from user

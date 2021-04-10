@@ -7,7 +7,7 @@ simple_drawer offers an easy way to implement your own widget as a drawer which 
 
 ## Getting Started
 
-**To use, add a SimpleDrawer at the end of a Stack & activate it by calling "SimpleDrawer.activate(id);" anywhere.**
+**To use: Add a SimpleDrawer at the end of a Stack & activate it by calling "SimpleDrawer.activate(id);" anywhere.**
 You can call "SimpleDrawer.deactivate(id);" to disable the drawer remotely.
 
 A SimpleDrawer has various arguments to modify it (only 4 required):
@@ -22,6 +22,8 @@ A SimpleDrawer has various arguments to modify it (only 4 required):
 - (optional) **animationCurve** (Curve) (Curve which the drawer takes to slide in and out. Default: Curves.ease)
 - (optional) **fadeColor** (Colors) (Color which is overlaid behind the SimpleDrawer to obscure content. Default: Colors.black54)
 - (optional) **simpleDrawerAreaHeight** & **simpleDrawerAreaWidth** (double) (Restrictions on how much space to total widget (i.e. drawer + Conatiner with fadeColor) can take up. Default: device height & width)
+
+You can also use SimpleDrawer.isActive(id) (bool) to get the current status of any SimpleDrawer.
 
 ### Example
 
