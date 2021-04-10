@@ -27,3 +27,8 @@
 
 * add function isActive, so the user can get the current status of any SimpleDrawer
 * hide _idToStreamController (formerly idToStreamController) from user
+
+## [0.0.7] - 2021-04-10
+
+* switch function isActive for getDrawerStatus, which represents the status more accurately.
+* Update example to include getDrawerStatus

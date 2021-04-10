@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:example/Direction.dart';
+import 'package:example/DrawerStatus.dart';
+import 'package:example/SimpleDrawer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_drawer/simple_drawer.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -50,6 +55,7 @@ class MyApp extends StatelessWidget {
         childWidth: 150,
         direction: Direction.left,
         id: "left",
+        animationDurationInMilliseconds: 600,
       );
 
       // SimpleDrawer from the top
@@ -122,11 +128,7 @@ class MyApp extends StatelessWidget {
                         SimpleDrawer.activate("bottom");
                       },
                       child: Text("bottom")),
-                  ElevatedButton(
-                      onPressed: () {
-                        SimpleDrawer.activate("left");
-                      },
-                      child: Text("left")),
+                  DrawerStatusWidget(),
                   ElevatedButton(
                       onPressed: () {
                         SimpleDrawer.activate("top");
@@ -161,5 +163,47 @@ class MyApp extends StatelessWidget {
         ),
       );
     }
+  }
+}
+
+class DrawerStatusWidget extends StatefulWidget {
+  @override
+  _DrawerStatusWidgetState createState() => _DrawerStatusWidgetState();
+}
+
+class _DrawerStatusWidgetState extends State<DrawerStatusWidget> {
+  bool isChecking = false;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isChecking){
+      isChecking = true;
+      check();
+    }
+
+    String status = "none";
+    DrawerStatus drawerStatus = SimpleDrawer.getDrawerStatus("left");
+    switch (drawerStatus){
+      case DrawerStatus.active: {status = "active"; break;}
+      case DrawerStatus.slidingIn: {status = "slidingIn"; break;}
+      case DrawerStatus.retracting: {status = "retracting"; break;}
+      case DrawerStatus.inactive: {status = "inactive"; break;}
+    }
+
+    return Row(children: [
+      ElevatedButton(
+          onPressed: () {
+            SimpleDrawer.activate("left");
+          },
+          child: Text("left")),
+      Text("Status: " + status),
+    ], mainAxisAlignment: MainAxisAlignment.center,);
+  }
+
+  void check(){
+    setState(() {
+
+    });
+    Timer(Duration(milliseconds: 100), (){check();});
   }
 }

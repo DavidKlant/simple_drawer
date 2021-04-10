@@ -23,7 +23,7 @@ A SimpleDrawer has various arguments to modify it (only 4 required):
 - (optional) **fadeColor** (Colors) (Color which is overlaid behind the SimpleDrawer to obscure content. Default: Colors.black54)
 - (optional) **simpleDrawerAreaHeight** & **simpleDrawerAreaWidth** (double) (Restrictions on how much space to total widget (i.e. drawer + Conatiner with fadeColor) can take up. Default: device height & width)
 
-You can also use SimpleDrawer.isActive(id) (bool) to get the current status of any SimpleDrawer.
+You can also use SimpleDrawer.getDrawerStatus(id) to get the current status of any SimpleDrawer.
 
 ### Example
 

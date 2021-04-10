@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:example/Direction.dart';
+import 'package:example/DrawerStatus.dart';
+import 'package:example/WidgetWrappedInAnimation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_drawer/src/Direction.dart';
-import 'package:simple_drawer/src/DrawerStatus.dart';
-import 'package:simple_drawer/src/WidgetWrappedInAnimation.dart';
 
 /// SimpleDrawer-Widget which can be pushed in from all four sides
 class SimpleDrawer extends StatefulWidget {
@@ -84,15 +84,15 @@ class SimpleDrawer extends StatefulWidget {
 
   SimpleDrawer(
       {this.direction,
-      this.childWidth,
-      this.childHeight,
-      this.animationDurationInMilliseconds,
-      this.animationCurve,
-      this.child,
-      this.simpleDrawerAreaHeight,
-      this.simpleDrawerAreaWidth,
-      this.fadeColor,
-      this.id}) {
+        this.childWidth,
+        this.childHeight,
+        this.animationDurationInMilliseconds,
+        this.animationCurve,
+        this.child,
+        this.simpleDrawerAreaHeight,
+        this.simpleDrawerAreaWidth,
+        this.fadeColor,
+        this.id}) {
     if (id == null) {
       throw Exception("id can not be null");
     }
@@ -302,7 +302,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
         widget.direction == Direction.bottom) {
       touchToRetractWidth = (isShown) ? maxWidth : 0;
       touchToRetractHeight =
-          (isShown) ? maxHeight - widget.childHeight : maxHeight;
+      (isShown) ? maxHeight - widget.childHeight : maxHeight;
     }
 
     // set touchToRetractWidget for Direction.left & .right
