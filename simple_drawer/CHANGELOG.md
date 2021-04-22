@@ -32,3 +32,7 @@
 
 * switch function isActive for getDrawerStatus, which represents the status more accurately.
 * Update example to include getDrawerStatus
+
+## [0.0.8] - 2021-04-10
+
+* fix library (to include DrawerStatus)
