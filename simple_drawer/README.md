@@ -22,6 +22,7 @@ A SimpleDrawer has various arguments to modify it (only 4 required):
 - (optional) **animationCurve** (Curve) (Curve which the drawer takes to slide in and out. Default: Curves.ease)
 - (optional) **fadeColor** (Colors) (Color which is overlaid behind the SimpleDrawer to obscure content. Default: Colors.black54)
 - (optional) **simpleDrawerAreaHeight** & **simpleDrawerAreaWidth** (double) (Restrictions on how much space to total widget (i.e. drawer + Conatiner with fadeColor) can take up. Default: device height & width)
+- (optional) **onDrawerStatusChanged** (Funciton) (This function is called whenever the DrawerStatus of this SimpleDrawer changes. Receives the new DrawerStatus as an argument.)
 
 You can also use SimpleDrawer.getDrawerStatus(id) to get the current status of any SimpleDrawer.
 

@@ -12,6 +12,7 @@ class SimpleDrawer extends StatefulWidget {
   /// Map which holds a StreamController for each unique SimpleDrawer
   static Map<String, StreamController<String>> _idToStreamController = HashMap();
   static Map<String, DrawerStatus> _idToStatus = HashMap();
+  static Map<String, Function> _idToOnStatusChanged = HashMap();
 
   /// returns the current status of a drawer
   static DrawerStatus getDrawerStatus(String id){
@@ -19,6 +20,18 @@ class SimpleDrawer extends StatefulWidget {
       return DrawerStatus.inactive;
     }
     return _idToStatus[id];
+  }
+
+  static void _setDrawerStatus(String id, DrawerStatus drawerStatus){
+    SimpleDrawer._idToStatus[id] = drawerStatus;
+    if (_idToOnStatusChanged[id] != null){
+      try{
+        _idToOnStatusChanged[id](drawerStatus);
+      } catch (e) {
+        print("Error while running onDrawerStatusChanged. This function receives exactly one argument, which is a DrawerStatus");
+      }
+
+    }
   }
 
   /// activates the SimpleDrawer of the chosen Id & set isActive to true
@@ -82,6 +95,11 @@ class SimpleDrawer extends StatefulWidget {
   /// (optional argument. default: Colors.black54)
   final Color fadeColor;
 
+  /// This function is called whenever the DrawerStatus of this SimpleDrawer
+  /// changes.
+  /// Receives the new DrawerStatus as an argument.
+  final Function onDrawerStatusChanged;
+
   SimpleDrawer(
       {this.direction,
         this.childWidth,
@@ -92,7 +110,7 @@ class SimpleDrawer extends StatefulWidget {
         this.simpleDrawerAreaHeight,
         this.simpleDrawerAreaWidth,
         this.fadeColor,
-        this.id}) {
+        this.id, this.onDrawerStatusChanged}) {
     if (id == null) {
       throw Exception("id can not be null");
     }
@@ -109,6 +127,8 @@ class SimpleDrawer extends StatefulWidget {
       throw Exception(
           "childWidth must not be null for Direction.left and Direction.right");
     }
+
+    SimpleDrawer._idToOnStatusChanged[this.id] = this.onDrawerStatusChanged;
   }
 
   @override
@@ -152,13 +172,13 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     });
 
     // set status to retracting
-    SimpleDrawer._idToStatus[widget.id] = DrawerStatus.retracting;
+    SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.retracting);
 
     // once retracting is done set isActive to false, so some widgets are not
     // rendered & set status to inactive
     int durationInMilli = widget.animationDurationInMilliseconds ?? 300;
     Timer(Duration(milliseconds: durationInMilli), () {
-      SimpleDrawer._idToStatus[widget.id] = DrawerStatus.inactive;
+      SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.inactive);
       setState(() {
         isActive = false;
       });
@@ -168,12 +188,12 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   /// pushes in the pushIN
   void activateSimpleDrawer() {
     // set drawerStatus to sliding in
-    SimpleDrawer._idToStatus[widget.id] = DrawerStatus.slidingIn;
+    SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.slidingIn);
 
     // after slide in is done -> set status to active
     int durationInMilli = widget.animationDurationInMilliseconds ?? 300;
     Timer(Duration(milliseconds: durationInMilli), () {
-      SimpleDrawer._idToStatus[widget.id] = DrawerStatus.active;
+      SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.active);
     });
 
     // activate

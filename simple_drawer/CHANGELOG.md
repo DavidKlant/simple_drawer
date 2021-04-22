@@ -36,3 +36,7 @@
 ## [0.0.8] - 2021-04-10
 
 * fix library (to include DrawerStatus)
+
+## [0.0.9] - 2021-04-22
+
+* add onDrawerStatusChanged as an argument (This function is called whenever the DrawerStatus of this SimpleDrawer changes. Receives the new DrawerStatus as an argument.)

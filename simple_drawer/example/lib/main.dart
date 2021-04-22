@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:example/Direction.dart';
 import 'package:example/DrawerStatus.dart';
@@ -56,6 +57,10 @@ class MyApp extends StatelessWidget {
         direction: Direction.left,
         id: "left",
         animationDurationInMilliseconds: 600,
+        onDrawerStatusChanged: (drawerStatus){
+          Random rng = Random();
+          print("DrawerStatus changed to: "+  drawerStatus.toString());
+        },
       );
 
       // SimpleDrawer from the top
@@ -180,15 +185,7 @@ class _DrawerStatusWidgetState extends State<DrawerStatusWidget> {
       isChecking = true;
       check();
     }
-
-    String status = "none";
     DrawerStatus drawerStatus = SimpleDrawer.getDrawerStatus("left");
-    switch (drawerStatus){
-      case DrawerStatus.active: {status = "active"; break;}
-      case DrawerStatus.slidingIn: {status = "slidingIn"; break;}
-      case DrawerStatus.retracting: {status = "retracting"; break;}
-      case DrawerStatus.inactive: {status = "inactive"; break;}
-    }
 
     return Row(children: [
       ElevatedButton(
@@ -196,7 +193,7 @@ class _DrawerStatusWidgetState extends State<DrawerStatusWidget> {
             SimpleDrawer.activate("left");
           },
           child: Text("left")),
-      Text("Status: " + status),
+      Text(drawerStatus.toString()),
     ], mainAxisAlignment: MainAxisAlignment.center,);
   }
 
