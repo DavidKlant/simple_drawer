@@ -40,3 +40,7 @@
 ## [0.0.9] - 2021-04-22
 
 * add onDrawerStatusChanged as an argument (This function is called whenever the DrawerStatus of this SimpleDrawer changes. Receives the new DrawerStatus as an argument.)
+
+## [0.0.10] - 2021-04-23
+
+* fix bug, where an event could have been added to a disposed StreamController

@@ -1,1 +1,1 @@
-enum DrawerStatus {active, inactive, retracting, slidingIn}
+enum DrawerStatus { active, inactive, retracting, slidingIn }

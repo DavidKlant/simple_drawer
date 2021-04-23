@@ -57,9 +57,9 @@ class MyApp extends StatelessWidget {
         direction: Direction.left,
         id: "left",
         animationDurationInMilliseconds: 600,
-        onDrawerStatusChanged: (drawerStatus){
+        onDrawerStatusChanged: (drawerStatus) {
           Random rng = Random();
-          print("DrawerStatus changed to: "+  drawerStatus.toString());
+          print("DrawerStatus changed to: " + drawerStatus.toString());
         },
       );
 
@@ -181,26 +181,29 @@ class _DrawerStatusWidgetState extends State<DrawerStatusWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isChecking){
+    if (!isChecking) {
       isChecking = true;
       check();
     }
     DrawerStatus drawerStatus = SimpleDrawer.getDrawerStatus("left");
 
-    return Row(children: [
-      ElevatedButton(
-          onPressed: () {
-            SimpleDrawer.activate("left");
-          },
-          child: Text("left")),
-      Text(drawerStatus.toString()),
-    ], mainAxisAlignment: MainAxisAlignment.center,);
+    return Row(
+      children: [
+        ElevatedButton(
+            onPressed: () {
+              SimpleDrawer.activate("left");
+            },
+            child: Text("left")),
+        Text(drawerStatus.toString()),
+      ],
+      mainAxisAlignment: MainAxisAlignment.center,
+    );
   }
 
-  void check(){
-    setState(() {
-
+  void check() {
+    setState(() {});
+    Timer(Duration(milliseconds: 100), () {
+      check();
     });
-    Timer(Duration(milliseconds: 100), (){check();});
   }
 }

@@ -10,33 +10,35 @@ import 'package:flutter/material.dart';
 /// SimpleDrawer-Widget which can be pushed in from all four sides
 class SimpleDrawer extends StatefulWidget {
   /// Map which holds a StreamController for each unique SimpleDrawer
-  static Map<String, StreamController<String>> _idToStreamController = HashMap();
+  static Map<String, StreamController<String>> _idToStreamController =
+      HashMap();
   static Map<String, DrawerStatus> _idToStatus = HashMap();
   static Map<String, Function> _idToOnStatusChanged = HashMap();
 
   /// returns the current status of a drawer
-  static DrawerStatus getDrawerStatus(String id){
-    if (_idToStatus[id] == null){
+  static DrawerStatus getDrawerStatus(String id) {
+    if (_idToStatus[id] == null) {
       return DrawerStatus.inactive;
     }
     return _idToStatus[id];
   }
 
-  static void _setDrawerStatus(String id, DrawerStatus drawerStatus){
+  static void _setDrawerStatus(String id, DrawerStatus drawerStatus) {
     SimpleDrawer._idToStatus[id] = drawerStatus;
-    if (_idToOnStatusChanged[id] != null){
-      try{
+    if (_idToOnStatusChanged[id] != null) {
+      try {
         _idToOnStatusChanged[id](drawerStatus);
       } catch (e) {
-        print("Error while running onDrawerStatusChanged. This function receives exactly one argument, which is a DrawerStatus");
+        print(
+            "Error while running onDrawerStatusChanged. This function receives exactly one argument, which is a DrawerStatus");
       }
-
     }
   }
 
   /// activates the SimpleDrawer of the chosen Id & set isActive to true
   static activate(String id) {
-    if (_idToStreamController[id] == null) {
+    if (_idToStreamController[id] == null ||
+        _idToStreamController[id].isClosed) {
       return;
     }
     _idToStreamController[id].add("activate");
@@ -44,7 +46,8 @@ class SimpleDrawer extends StatefulWidget {
 
   /// deactivates the SimpleDrawer of the chosen Id & set isActive to false
   static deactivate(String id) {
-    if (_idToStreamController[id] == null) {
+    if (_idToStreamController[id] == null ||
+        _idToStreamController[id].isClosed) {
       return;
     }
     _idToStreamController[id].add("deactivate");
@@ -102,15 +105,16 @@ class SimpleDrawer extends StatefulWidget {
 
   SimpleDrawer(
       {this.direction,
-        this.childWidth,
-        this.childHeight,
-        this.animationDurationInMilliseconds,
-        this.animationCurve,
-        this.child,
-        this.simpleDrawerAreaHeight,
-        this.simpleDrawerAreaWidth,
-        this.fadeColor,
-        this.id, this.onDrawerStatusChanged}) {
+      this.childWidth,
+      this.childHeight,
+      this.animationDurationInMilliseconds,
+      this.animationCurve,
+      this.child,
+      this.simpleDrawerAreaHeight,
+      this.simpleDrawerAreaWidth,
+      this.fadeColor,
+      this.id,
+      this.onDrawerStatusChanged}) {
     if (id == null) {
       throw Exception("id can not be null");
     }
@@ -322,7 +326,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
         widget.direction == Direction.bottom) {
       touchToRetractWidth = (isShown) ? maxWidth : 0;
       touchToRetractHeight =
-      (isShown) ? maxHeight - widget.childHeight : maxHeight;
+          (isShown) ? maxHeight - widget.childHeight : maxHeight;
     }
 
     // set touchToRetractWidget for Direction.left & .right

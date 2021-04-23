@@ -9,9 +9,9 @@ class WidgetWrappedInAnimation extends StatefulWidget {
 
   WidgetWrappedInAnimation(
       {this.child,
-        this.transitionType,
-        this.durationInMilliseconds,
-        this.curve}) {
+      this.transitionType,
+      this.durationInMilliseconds,
+      this.curve}) {
     if (child == null) {
       throw Exception("ScaleUpAnimation needs child to be set");
     }
