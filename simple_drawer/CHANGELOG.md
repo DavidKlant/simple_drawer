@@ -44,3 +44,7 @@
 ## [0.0.10] - 2021-04-23
 
 * fix bug, where an event could have been added to a disposed StreamController
+
+## [0.0.11] - 2021-09-08
+
+* impl null-safety
