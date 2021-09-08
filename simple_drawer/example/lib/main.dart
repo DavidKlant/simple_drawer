@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 
-import 'package:example/Direction.dart';
-import 'package:example/DrawerStatus.dart';
-import 'package:example/SimpleDrawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_drawer/Direction.dart';
+import 'package:simple_drawer/DrawerStatus.dart';
+import 'package:simple_drawer/SimpleDrawer.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -58,7 +57,6 @@ class MyApp extends StatelessWidget {
         id: "left",
         animationDurationInMilliseconds: 600,
         onDrawerStatusChanged: (drawerStatus) {
-          Random rng = Random();
           print("DrawerStatus changed to: " + drawerStatus.toString());
         },
       );
@@ -185,7 +183,7 @@ class _DrawerStatusWidgetState extends State<DrawerStatusWidget> {
       isChecking = true;
       check();
     }
-    DrawerStatus drawerStatus = SimpleDrawer.getDrawerStatus("left");
+    DrawerStatus drawerStatus = SimpleDrawer.getDrawerStatus("left") ?? DrawerStatus.inactive;
 
     return Row(
       children: [

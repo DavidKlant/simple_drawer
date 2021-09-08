@@ -10,24 +10,24 @@ import 'package:simple_drawer/src/WidgetWrappedInAnimation.dart';
 /// SimpleDrawer-Widget which can be pushed in from all four sides
 class SimpleDrawer extends StatefulWidget {
   /// Map which holds a StreamController for each unique SimpleDrawer
-  static Map<String, StreamController<String>> _idToStreamController =
+  static Map<String?, StreamController<String>> _idToStreamController =
       HashMap();
-  static Map<String, DrawerStatus> _idToStatus = HashMap();
-  static Map<String, Function> _idToOnStatusChanged = HashMap();
+  static Map<String?, DrawerStatus> _idToStatus = HashMap();
+  static Map<String?, Function?> _idToOnStatusChanged = HashMap();
 
   /// returns the current status of a drawer
-  static DrawerStatus getDrawerStatus(String id) {
+  static DrawerStatus? getDrawerStatus(String id) {
     if (_idToStatus[id] == null) {
       return DrawerStatus.inactive;
     }
     return _idToStatus[id];
   }
 
-  static void _setDrawerStatus(String id, DrawerStatus drawerStatus) {
+  static void _setDrawerStatus(String? id, DrawerStatus drawerStatus) {
     SimpleDrawer._idToStatus[id] = drawerStatus;
     if (_idToOnStatusChanged[id] != null) {
       try {
-        _idToOnStatusChanged[id](drawerStatus);
+        _idToOnStatusChanged[id]!(drawerStatus);
       } catch (e) {
         print(
             "Error while running onDrawerStatusChanged. This function receives exactly one argument, which is a DrawerStatus");
@@ -38,25 +38,25 @@ class SimpleDrawer extends StatefulWidget {
   /// activates the SimpleDrawer of the chosen Id & set isActive to true
   static activate(String id) {
     if (_idToStreamController[id] == null ||
-        _idToStreamController[id].isClosed) {
+        _idToStreamController[id]!.isClosed) {
       return;
     }
-    _idToStreamController[id].add("activate");
+    _idToStreamController[id]!.add("activate");
   }
 
   /// deactivates the SimpleDrawer of the chosen Id & set isActive to false
-  static deactivate(String id) {
+  static deactivate(String? id) {
     if (_idToStreamController[id] == null ||
-        _idToStreamController[id].isClosed) {
+        _idToStreamController[id]!.isClosed) {
       return;
     }
-    _idToStreamController[id].add("deactivate");
+    _idToStreamController[id]!.add("deactivate");
   }
 
   /// unique id chosen for a SimpleDrawer (chosen by user)
   /// (if this is changed, you must perform at least a hot reload)
   /// (must be set)
-  final String id;
+  final String? id;
 
   /// the direction from which the SimpleDrawer enters
   /// (must be set)
@@ -64,47 +64,47 @@ class SimpleDrawer extends StatefulWidget {
 
   /// the content of the SimpleDrawer (what is being pushed in)
   /// (must be set)
-  final Widget child;
+  final Widget? child;
 
   /// the width of the child.
   /// (must be set if direction is Direction.left or .right)
-  final double childWidth;
+  final double? childWidth;
 
   /// the height of the child.
   /// (must be set if direction is Direction.top or .bottom)
-  final double childHeight;
+  final double? childHeight;
 
   /// the duration in milliseconds which it takes for the simpleDrawer to be
   ///     pushed in & pushed out
   /// (optional argument. default: 300)
-  final int animationDurationInMilliseconds;
+  final int? animationDurationInMilliseconds;
 
   /// the animation curve which the simpleDrawer takes to push in and out
   /// (optional argument. default: Curves.ease)
-  final Curve animationCurve;
+  final Curve? animationCurve;
 
   /// the maximum height which the entire widget (including the fading
   /// background) can take up
   /// (optional argument. default: entire device height)
-  final double simpleDrawerAreaHeight;
+  final double? simpleDrawerAreaHeight;
 
   /// the maximum width which the entire widget (including the fading
   /// background) can take up
   /// (optional argument. default: entire device width)
-  final double simpleDrawerAreaWidth;
+  final double? simpleDrawerAreaWidth;
 
   /// The color which is overlaid behind the simpleDrawer
   /// to obscure the content in the background.
   /// (optional argument. default: Colors.black54)
-  final Color fadeColor;
+  final Color? fadeColor;
 
   /// This function is called whenever the DrawerStatus of this SimpleDrawer
   /// changes.
   /// Receives the new DrawerStatus as an argument.
-  final Function onDrawerStatusChanged;
+  final Function? onDrawerStatusChanged;
 
   SimpleDrawer(
-      {this.direction,
+      {this.direction = Direction.none,
       this.childWidth,
       this.childHeight,
       this.animationDurationInMilliseconds,
@@ -118,7 +118,7 @@ class SimpleDrawer extends StatefulWidget {
     if (id == null) {
       throw Exception("id can not be null");
     }
-    if (direction == null) {
+    if (direction == Direction.none) {
       throw Exception("direction can not be null");
     }
     if ((direction == Direction.bottom || direction == Direction.top) &&
@@ -149,7 +149,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     SimpleDrawer._idToStreamController[widget.id] = StreamController<String>();
 
     // listen to the StreamController for events "activate" & "deactivate"
-    SimpleDrawer._idToStreamController[widget.id].stream.listen((event) {
+    SimpleDrawer._idToStreamController[widget.id]!.stream.listen((event) {
       if (event == "activate") {
         activateSimpleDrawer();
       }
@@ -163,7 +163,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   @override
   void dispose() {
     // close SteamController
-    SimpleDrawer._idToStreamController[widget.id].close();
+    SimpleDrawer._idToStreamController[widget.id]!.close();
 
     super.dispose();
   }
@@ -237,7 +237,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   /// chosen Direction
   Widget simpleDrawer(int durationInMilli, Curve animationCurve,
       double maxWidth, double maxHeight) {
-    Widget simpleDrawer;
+    Widget simpleDrawer = Container();
 
     switch (widget.direction) {
       case Direction.bottom:
@@ -245,7 +245,7 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
           simpleDrawer = Column(
             children: [
               contractor(durationInMilli, animationCurve, maxWidth, maxHeight),
-              (isActive) ? widget.child : Container()
+              (isActive) ? widget.child ?? Container() : Container()
             ],
           );
           break;
@@ -261,12 +261,12 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
 
           // return Structure for Direction.top with Position
           simpleDrawer = Positioned(
-            top: -widget.childHeight,
+            top: -widget.childHeight!,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 pushingWidget,
-                widget.child,
+                widget.child ?? Container(),
                 contractor(
                     durationInMilli, animationCurve, maxWidth, maxHeight),
               ],
@@ -285,12 +285,12 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
 
           // return Structure for Direction.left with Position
           simpleDrawer = Positioned(
-            left: -widget.childWidth,
+            left: -widget.childWidth!,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 pushingWidget,
-                (isActive) ? widget.child : Container(),
+                (isActive) ? widget.child ?? Container() : Container(),
                 contractor(
                     durationInMilli, animationCurve, maxWidth, maxHeight),
               ],
@@ -303,11 +303,14 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
           simpleDrawer = Row(
             children: [
               contractor(durationInMilli, animationCurve, maxWidth, maxHeight),
-              (isActive) ? widget.child : Container()
+              (isActive) ? widget.child ?? Container() : Container()
             ],
           );
           break;
         }
+      case Direction.none:{
+        throw Exception("direction can not be null");
+      }
     }
 
     return simpleDrawer;
@@ -318,21 +321,21 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   ///     SimpleDrawerWidget
   Widget contractor(int durationInMilli, Curve animationCurve, double maxWidth,
       double maxHeight) {
-    double touchToRetractWidth;
-    double touchToRetractHeight;
+    double touchToRetractWidth = 0;
+    double touchToRetractHeight = 0;
 
     // set touchToRetractWidget for Direction.top & .bottom
     if (widget.direction == Direction.top ||
         widget.direction == Direction.bottom) {
       touchToRetractWidth = (isShown) ? maxWidth : 0;
       touchToRetractHeight =
-          (isShown) ? maxHeight - widget.childHeight : maxHeight;
+          (isShown) ? maxHeight - widget.childHeight! : maxHeight;
     }
 
     // set touchToRetractWidget for Direction.left & .right
     if (widget.direction == Direction.left ||
         widget.direction == Direction.right) {
-      touchToRetractWidth = (isShown) ? maxWidth - widget.childWidth : maxWidth;
+      touchToRetractWidth = (isShown) ? maxWidth - widget.childWidth! : maxWidth;
       touchToRetractHeight = (isShown) ? maxHeight : 0;
     }
 

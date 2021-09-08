@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Wraps a Widget with a fade in or fade out animation.
 class WidgetWrappedInAnimation extends StatefulWidget {
-  final Widget child;
-  final TransitionType transitionType;
-  final int durationInMilliseconds;
-  final Curve curve;
+  final Widget? child;
+  final TransitionType? transitionType;
+  final int? durationInMilliseconds;
+  final Curve? curve;
 
   WidgetWrappedInAnimation(
       {this.child,
@@ -24,7 +24,7 @@ class WidgetWrappedInAnimation extends StatefulWidget {
 
 class _WidgetWrappedInAnimationState extends State<WidgetWrappedInAnimation>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
+  AnimationController? _animationController;
 
   @override
   void initState() {
@@ -39,18 +39,22 @@ class _WidgetWrappedInAnimationState extends State<WidgetWrappedInAnimation>
 
   @override
   Widget build(BuildContext context) {
+    int durationInMilliseconds = widget.durationInMilliseconds ?? 1000;
+
     // set defaults
     TransitionType transitionType =
         widget.transitionType ?? TransitionType.fadeIn;
     Curve curve = widget.curve ?? Curves.ease;
 
     if (transitionType == TransitionType.fadeOut) {
-      _animationController.reverse(from: 1);
+      _animationController!.reverse(from: 1);
     }
 
     Animation<double> animation = CurvedAnimation(
       curve: curve,
-      parent: _animationController,
+      parent: _animationController ?? AnimationController(
+          duration: Duration(milliseconds: durationInMilliseconds), vsync: this)
+        ..animateTo(1, duration: Duration(milliseconds: durationInMilliseconds)),
     );
 
     Widget transition;
@@ -78,7 +82,7 @@ class _WidgetWrappedInAnimationState extends State<WidgetWrappedInAnimation>
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController!.dispose();
     super.dispose();
   }
 }
