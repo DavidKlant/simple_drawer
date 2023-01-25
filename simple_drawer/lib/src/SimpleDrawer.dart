@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_drawer/src/Direction.dart';
 import 'package:simple_drawer/src/DrawerStatus.dart';
@@ -308,9 +307,10 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
           );
           break;
         }
-      case Direction.none:{
-        throw Exception("direction can not be null");
-      }
+      case Direction.none:
+        {
+          throw Exception("direction can not be null");
+        }
     }
 
     return simpleDrawer;
@@ -335,20 +335,23 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     // set touchToRetractWidget for Direction.left & .right
     if (widget.direction == Direction.left ||
         widget.direction == Direction.right) {
-      touchToRetractWidth = (isShown) ? maxWidth - widget.childWidth! : maxWidth;
+      touchToRetractWidth =
+          (isShown) ? maxWidth - widget.childWidth! : maxWidth;
       touchToRetractHeight = (isShown) ? maxHeight : 0;
     }
 
-    Widget touchToRetractWidget = GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        SimpleDrawer.deactivate(widget.id);
-      },
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: durationInMilli),
-        curve: animationCurve,
-        width: touchToRetractWidth,
-        height: touchToRetractHeight,
+    Widget touchToRetractWidget = Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          SimpleDrawer.deactivate(widget.id);
+        },
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: durationInMilli),
+          curve: animationCurve,
+          width: touchToRetractWidth,
+          height: touchToRetractHeight,
+        ),
       ),
     );
 
