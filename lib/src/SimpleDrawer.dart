@@ -301,7 +301,9 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
         {
           simpleDrawer = Row(
             children: [
-              contractor(durationInMilli, animationCurve, maxWidth, maxHeight),
+              Expanded(
+                  child: contractor(
+                      durationInMilli, animationCurve, maxWidth, maxHeight)),
               (isActive) ? widget.child ?? Container() : Container()
             ],
           );
@@ -340,18 +342,16 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
       touchToRetractHeight = (isShown) ? maxHeight : 0;
     }
 
-    Widget touchToRetractWidget = Expanded(
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          SimpleDrawer.deactivate(widget.id);
-        },
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: durationInMilli),
-          curve: animationCurve,
-          width: touchToRetractWidth,
-          height: touchToRetractHeight,
-        ),
+    Widget touchToRetractWidget = GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        SimpleDrawer.deactivate(widget.id);
+      },
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: durationInMilli),
+        curve: animationCurve,
+        width: touchToRetractWidth,
+        height: touchToRetractHeight,
       ),
     );
 
