@@ -2,6 +2,7 @@ name: simple_drawer
 description: simple_drawer offers an easy way to implement your own widget as a drawer which slides in from any direction (top, bottom, left & right).
 version: 0.0.11
 homepage: https://github.com/DavidKlant/simple_drawer
+publish_to: none
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
