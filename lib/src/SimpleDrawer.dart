@@ -170,9 +170,10 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   /// retracts the pushing
   void deactivateSimpleDrawer() {
     // start retracting
-    setState(() {
-      isShown = false;
-    });
+    if (mounted)
+      setState(() {
+        isShown = false;
+      });
 
     // set status to retracting
     SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.retracting);
@@ -182,9 +183,10 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     int durationInMilli = widget.animationDurationInMilliseconds ?? 300;
     Timer(Duration(milliseconds: durationInMilli), () {
       SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.inactive);
-      setState(() {
-        isActive = false;
-      });
+      if (mounted)
+        setState(() {
+          isActive = false;
+        });
     });
   }
 
@@ -200,10 +202,11 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     });
 
     // activate
-    setState(() {
-      isShown = true;
-      isActive = true;
-    });
+    if (mounted)
+      setState(() {
+        isShown = true;
+        isActive = true;
+      });
   }
 
   @override
