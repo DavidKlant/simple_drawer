@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_drawer/src/Direction.dart';
 import 'package:simple_drawer/src/DrawerStatus.dart';
@@ -171,9 +170,10 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
   /// retracts the pushing
   void deactivateSimpleDrawer() {
     // start retracting
-    setState(() {
-      isShown = false;
-    });
+    if (mounted)
+      setState(() {
+        isShown = false;
+      });
 
     // set status to retracting
     SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.retracting);
@@ -183,9 +183,10 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     int durationInMilli = widget.animationDurationInMilliseconds ?? 300;
     Timer(Duration(milliseconds: durationInMilli), () {
       SimpleDrawer._setDrawerStatus(widget.id, DrawerStatus.inactive);
-      setState(() {
-        isActive = false;
-      });
+      if (mounted)
+        setState(() {
+          isActive = false;
+        });
     });
   }
 
@@ -201,10 +202,11 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     });
 
     // activate
-    setState(() {
-      isShown = true;
-      isActive = true;
-    });
+    if (mounted)
+      setState(() {
+        isShown = true;
+        isActive = true;
+      });
   }
 
   @override
@@ -302,15 +304,18 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
         {
           simpleDrawer = Row(
             children: [
-              contractor(durationInMilli, animationCurve, maxWidth, maxHeight),
+              Expanded(
+                  child: contractor(
+                      durationInMilli, animationCurve, maxWidth, maxHeight)),
               (isActive) ? widget.child ?? Container() : Container()
             ],
           );
           break;
         }
-      case Direction.none:{
-        throw Exception("direction can not be null");
-      }
+      case Direction.none:
+        {
+          throw Exception("direction can not be null");
+        }
     }
 
     return simpleDrawer;
@@ -335,7 +340,8 @@ class _SimpleDrawerState extends State<SimpleDrawer> {
     // set touchToRetractWidget for Direction.left & .right
     if (widget.direction == Direction.left ||
         widget.direction == Direction.right) {
-      touchToRetractWidth = (isShown) ? maxWidth - widget.childWidth! : maxWidth;
+      touchToRetractWidth =
+          (isShown) ? maxWidth - widget.childWidth! : maxWidth;
       touchToRetractHeight = (isShown) ? maxHeight : 0;
     }
 
